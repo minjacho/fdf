@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := all
-SRCS = fdf_printer.c test.c rotate.c
+SRCS = err_handle.c fdf_main.c fdf_printer.c parse.c rotate.c input_read.c
 SRCS_BONUS =
 LIBFT_DIR = ./libft
 LIBFT_NAME = ft
@@ -8,7 +8,7 @@ OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 DEPS = $(SRCS:.c=.d)
 DEPS_BONUS = $(SRCS_BONUS:.c=.d)
-CC = cc -Wall -Wextra -Werror -MMD -MP
+CC = cc -Wall -Wextra -Werror -MMD -MP -g -fsanitize=address
 MLX = -lmlx -framework OpenGL -framework AppKit
 NAME = fdf
 BONUS =
@@ -27,13 +27,13 @@ $(LIBFT) :
 	@ make -C $(LIBFT_DIR)
 
 $(NAME) : $(LIBFT) $(OBJS)
-	@$(CC) -o $(NAME) $(OBJS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) $(MLX)
+	@$(CC) -o $(NAME) $(OBJS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) $(MLX) -L./mlx -Imlx
 
 $(BONUS) : $(LIBFT) $(OBJS_BONUS)
 	@$(CC) -o $(BONUS) $(OBJS_BONUS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR)
 
 %.o : %.c
-	@$(CC) -c $<  -I$(LIBFT_DIR)
+	@$(CC) -c $<  -I$(LIBFT_DIR) -Imlx
 
 clean :
 	@echo "PUSH_SWAP : make clean"
