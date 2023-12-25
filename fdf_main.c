@@ -6,7 +6,7 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 13:47:59 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/23 14:02:03 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/25 16:20:17 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	mlx_main(t_info *info)
 	t_data	img;
 
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 5000, 5000, "Hello world!");
-	img.img = mlx_new_image(mlx, 5000, 5000);
+	mlx_win = mlx_new_window(mlx, MLX_SIZE_X, MLX_SIZE_Y, "fdf");
+	img.img = mlx_new_image(mlx, MLX_SIZE_X, MLX_SIZE_Y);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	for (int i = 0; i < info->y_size; i++)
 	{
@@ -33,14 +33,22 @@ void	mlx_main(t_info *info)
 		{
 			rotate(&info->points[i][j]);
 			project(&info->points[i][j], M_PI / 6);
+			info->points[i][j].x += 400;
+			info->points[i][j].y += 100;
 		}
 	}
 	for (int i = 0; i < info->y_size; i++)
 	{
 		for (int j = 0; j < info->x_size; j++)
 		{
-			put_line_on_window(&img, info->points[i][j], info->points[i + 1][j]);
-			put_line_on_window(&img, info->points[i][j], info->points[i][j + 1]);
+			if (i != info->y_size - 1)
+				put_line_on_window(&img, info->points[i][j], info->points[i + 1][j], info);
+			if (j != info->x_size - 1)
+				put_line_on_window(&img, info->points[i][j], info->points[i][j + 1], info);
+			if (i != 0)
+				put_line_on_window(&img, info->points[i][j], info->points[i - 1][j], info);
+			if (j != 0)
+				put_line_on_window(&img, info->points[i][j], info->points[i][j - 1], info);
 		}
 	}
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);

@@ -15,19 +15,19 @@ BONUS =
 -include $(DEPS)
 
 all :
-	@echo "PUSH_SWAP : make $(NAME)"
+	@echo "FDF : make $(NAME)"
 	@make $(NAME)
 
 bonus :
-	@echo "PUSH_SWAP : make $(BONUS)"
+	@echo "FDF : make $(BONUS)"
 	@make $(BONUS)
 
 $(LIBFT) :
-	@ echo "PUSH_SWAP : make $(LIBFT)"
+	@ echo "FDF : make $(LIBFT)"
 	@ make -C $(LIBFT_DIR)
 
 $(NAME) : $(LIBFT) $(OBJS)
-	@$(CC) -o $(NAME) $(OBJS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) $(MLX) -L./mlx -Imlx
+	@$(CC) -o $(NAME) $(OBJS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) $(MLX)
 
 $(BONUS) : $(LIBFT) $(OBJS_BONUS)
 	@$(CC) -o $(BONUS) $(OBJS_BONUS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR)
@@ -36,17 +36,17 @@ $(BONUS) : $(LIBFT) $(OBJS_BONUS)
 	@$(CC) -c $<  -I$(LIBFT_DIR) -Imlx
 
 clean :
-	@echo "PUSH_SWAP : make clean"
+	@echo "FDF : make clean"
 	@rm -f $(OBJS) $(DEPS) $(OBJS_BONUS) $(DEPS_BONUS)
 	@make -C $(LIBFT_DIR) clean
 
 fclean :
-	@echo "PUSH_SWAP : make fclean"
+	@echo "FDF : make fclean"
 	@rm -f $(OBJS) $(NAME) $(DEPS) $(OBJS_BONUS) $(BONUS) $(DEPS_BONUS)
 	@make -C $(LIBFT_DIR) fclean
 
 re : fclean
-	@ echo "PUSH_SWAP : make re"
+	@ echo "FDF : make re"
 	@make all
 
 .PHONY: all clean fclean re
