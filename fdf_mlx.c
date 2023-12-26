@@ -6,7 +6,7 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:39:38 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/26 17:59:24 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/26 22:09:33 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	set_ratio(t_info *info)
 {
 	double	max_diagonal;
 	double	max_height;
-	int		height_plat_ratio;
+	double	height_plat_ratio;
 
 	max_diagonal = sqrt(pow(info->y_size, 2) + pow(info->x_size, 2));
 	max_height = info->top_height - info->bottom_height;
@@ -45,9 +45,8 @@ void	set_ratio(t_info *info)
 	if (info->plat_ratio > 50)
 		info->plat_ratio = 50;
 	info->height_ratio = (info->plat_ratio / height_plat_ratio);
-	if (info->top_height - info->bottom_height > MLX_SIZE_Y)
-		info->height_ratio = \
-			MLX_SIZE_Y / (info->top_height - info->bottom_height) - 1;
+	if (info->height_ratio < 0.000001)
+		info->height_ratio = 0.000001;
 	info->min_x = 0;
 	info->min_y = 0;
 	info->max_x = MLX_SIZE_X - 1;

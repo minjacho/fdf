@@ -6,7 +6,7 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 13:47:59 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/26 19:36:38 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/26 22:09:54 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char *argv[])
 	t_info	info;
 
 	if (argc != 2)
-		exit(EXIT_SUCCESS);
+		exit_not_valid_input();
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		exit_not_valid_input();

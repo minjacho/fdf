@@ -6,7 +6,7 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 12:33:12 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/26 19:28:09 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/26 21:17:24 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_point
 
 typedef struct s_input
 {
-	int				*nums;
+	double			*nums;
 	int				size;
 	struct s_input	*next;
 }	t_input;

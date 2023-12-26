@@ -1,32 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_read.c                                       :+:      :+:    :+:   */
+/*   fdf_input_read.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 13:46:46 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/26 19:34:03 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/26 22:00:10 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	is_valid_line(char *str)
+int	ft_better_atod(const char *str)
 {
-	int	i;
+	int		i;
+	double	num;
+	int		sign;
 
 	i = 0;
-	while (str[i])
+	num = 0;
+	sign = 1;
+	while (str[i] == ' ')
+		i++;
+	if (str[i] == '+' || str[i] == '-')
 	{
-		if (str[i] < '0' || str[i] > '9')
-		{
-			if (!(str[i] == '+' || str[i] == '-' || str[i] == ' '))
-				return (0);
-		}
+		if (str[i] == '-')
+			sign = -1;
 		i++;
 	}
-	return (1);
+	while (str[i] && ft_isdigit(str[i]))
+	{
+		num *= 10;
+		num += (str[i] - '0') * sign;
+		i++;
+	}
+	return (num);
 }
 
 char	*get_next_line_wo_nl(int fd)
@@ -41,12 +50,10 @@ char	*get_next_line_wo_nl(int fd)
 	if (!result)
 		exit_malloc_error();
 	free(line);
-	if (!is_valid_line(result))
-		exit_not_valid_input();
 	return (result);
 }
 
-int	get_one_line_input(int fd, int **nums)
+int	get_one_line_input(int fd, double **nums)
 {
 	char	*line;
 	char	**str_nums;
@@ -62,11 +69,11 @@ int	get_one_line_input(int fd, int **nums)
 	size = 0;
 	while (str_nums[size])
 		size++;
-	*nums = (int *)malloc(sizeof(int) * size);
+	*nums = (double *)malloc(sizeof(double) * size);
 	idx = 0;
 	while (idx < size)
 	{
-		(*nums)[idx] = ft_atoi(str_nums[idx]);
+		(*nums)[idx] = ft_better_atod(str_nums[idx]);
 		idx++;
 	}
 	free(line);
@@ -76,7 +83,7 @@ int	get_one_line_input(int fd, int **nums)
 
 t_input	*make_new_node(int fd)
 {
-	int		*nums;
+	double	*nums;
 	int		size;
 	t_input	*new_node;
 
