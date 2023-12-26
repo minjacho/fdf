@@ -6,7 +6,7 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 19:37:57 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/25 15:55:20 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/26 17:24:12 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@ void	rotate_x_axis(t_point *point, double theta)
 	int	new_y;
 	int	new_z;
 
-	new_x = point->origin_x * cos(theta) - point->origin_z * sin(theta);
-	new_y = point->origin_y;
-	new_z = point->origin_x * sin(theta) + point->origin_z * cos(theta);
+	new_x = point->x * cos(theta) - point->z * sin(theta);
+	new_y = point->y;
+	new_z = point->x * sin(theta) + point->z * cos(theta);
 	point->x = new_x;
 	point->y = new_y;
 	point->z = new_z;
 }
+
 void	rotate_y_axis(t_point *point, double theta)
 {
 	int	new_x;
@@ -38,6 +39,7 @@ void	rotate_y_axis(t_point *point, double theta)
 	point->y = new_y;
 	point->z = new_z;
 }
+
 void	rotate_z_axis(t_point *point, double theta)
 {
 	int	new_x;
@@ -51,14 +53,35 @@ void	rotate_z_axis(t_point *point, double theta)
 	point->y = new_y;
 	point->z = new_z;
 }
-void	rotate(t_point *point)
+
+void	apply_ratio_rotate(t_info *info)
 {
-	rotate_x_axis(point, 0);
-	rotate_y_axis(point, 0);
-	rotate_z_axis(point, 0);
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < info->y_size)
+	{
+		j = 0;
+		while (j < info->x_size)
+		{
+			info->points[i][j].x = \
+				info->points[i][j].origin_x * info->plat_ratio;
+			info->points[i][j].y = \
+				info->points[i][j].origin_y * info->plat_ratio;
+			info->points[i][j].z = \
+				info->points[i][j].origin_z * info->height_ratio;
+			rotate_x_axis(&info->points[i][j], info->x_theta);
+			rotate_y_axis(&info->points[i][j], info->y_theta);
+			rotate_z_axis(&info->points[i][j], info->z_theta);
+			project(info, &info->points[i][j], M_PI / 6);
+			j++;
+		}
+		i++;
+	}
 }
 
-void	project(t_point *point, double theta)
+void	project(t_info *info, t_point *point, double theta)
 {
 	double	new_x;
 	double	new_y;
@@ -67,4 +90,12 @@ void	project(t_point *point, double theta)
 	new_y = point->x * sin(theta) + point->y * sin(theta) - point->z;
 	point->x = new_x;
 	point->y = new_y;
+	if (new_x < info->min_x)
+		info->min_x = new_x;
+	if (new_x > info->max_x)
+		info->max_x = new_x;
+	if (new_y < info->min_y)
+		info->min_y = new_y;
+	if (new_y > info->max_y)
+		info->max_y = new_y;
 }

@@ -6,7 +6,7 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:03:26 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/25 16:30:31 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/26 19:28:16 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int	get_axis_size(t_input *input, t_info *info)
 
 void	init_point(t_info *info, int x, int y, t_input *tmp)
 {
-	info->points[y][x].origin_x = (double)(x * 2);
-	info->points[y][x].origin_y = (double)(y * 2);
-	info->points[y][x].origin_z = (double)(tmp->nums[x] * 5);
-	if (info->top_height < tmp->nums[x] * 1)
-		info->top_height = tmp->nums[x] * 1;
-	if (info->bottom_height > tmp->nums[x] * 1)
-		info->bottom_height = tmp->nums[x] * 1;
+	info->points[y][x].origin_x = (double)x - info->x_size / 2;
+	info->points[y][x].origin_y = (double)y - info->y_size / 2;
+	info->points[y][x].origin_z = (double)(tmp->nums[x]);
+	if (info->top_height < tmp->nums[x])
+		info->top_height = tmp->nums[x];
+	if (info->bottom_height > tmp->nums[x])
+		info->bottom_height = tmp->nums[x];
 }
 
 void	init_info(t_info *info, t_input *input)
@@ -48,7 +48,7 @@ void	init_info(t_info *info, t_input *input)
 
 	info->points = (t_point **)malloc(sizeof(t_point *) * info->y_size);
 	if (!info->points)
-		exit(EXIT_FAILURE); // malloc error
+		exit_malloc_error();
 	i = 0;
 	tmp = input;
 	while (i < info->y_size)
@@ -56,7 +56,7 @@ void	init_info(t_info *info, t_input *input)
 		j = 0;
 		info->points[i] = (t_point *)malloc(sizeof(t_point) * info->x_size);
 		if (!info->points[i])
-			exit(EXIT_FAILURE); //malloc error
+			exit_malloc_error();
 		while (j < info->x_size)
 		{
 			init_point(info, j, i, tmp);
@@ -70,15 +70,25 @@ void	init_info(t_info *info, t_input *input)
 void	parse_main(t_info *info, int fd)
 {
 	t_input	*input;
+	t_input	*tmp;
+	t_input	*target;
 
 	input = read_file(fd);
 	info->bottom_height = 0;
 	info->top_height = 0;
-	info->bottom_color = 0x00FFFFFF;
+	info->bottom_color = 0x00FF0000;
 	info->top_color = 0x00FFFF00;
 	if (!input)
 		exit(EXIT_SUCCESS);
 	if (get_axis_size(input, info) < 0)
-		exit(EXIT_FAILURE); // invalid input
+		exit_not_valid_input();
 	init_info(info, input);
+	tmp = input;
+	while (tmp)
+	{
+		target = tmp;
+		free(tmp->nums);
+		free(target);
+		tmp = tmp->next;
+	}
 }

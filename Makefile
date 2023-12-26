@@ -1,6 +1,12 @@
 .DEFAULT_GOAL := all
-SRCS = err_handle.c fdf_main.c fdf_printer.c parse.c rotate.c input_read.c
-SRCS_BONUS =
+SRCS = \
+		fdf_err_handle.c fdf_main.c fdf_printer.c\
+		fdf_parse.c fdf_rotate.c fdf_input_read.c \
+		fdf_key_hook.c fdf_mlx.c
+SRCS_BONUS = \
+		fdf_err_handle_bonus.c fdf_main_bonus.c fdf_printer_bonus.c\
+		fdf_parse_bonus.c fdf_rotate_bonus.c fdf_input_read_bonus.c \
+		fdf_key_hook_bonus.c fdf_mlx_bonus.c
 LIBFT_DIR = ./libft
 LIBFT_NAME = ft
 LIBFT = libft/libft.a
@@ -8,10 +14,10 @@ OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 DEPS = $(SRCS:.c=.d)
 DEPS_BONUS = $(SRCS_BONUS:.c=.d)
-CC = cc -Wall -Wextra -Werror -MMD -MP -g -fsanitize=address
+CC = cc -Wall -Wextra -Werror -MMD -MP
 MLX = -lmlx -framework OpenGL -framework AppKit
 NAME = fdf
-BONUS =
+BONUS = .bonus
 -include $(DEPS)
 
 all :
@@ -19,7 +25,7 @@ all :
 	@make $(NAME)
 
 bonus :
-	@echo "FDF : make $(BONUS)"
+	@echo "FDF : make BONUS"
 	@make $(BONUS)
 
 $(LIBFT) :
@@ -27,13 +33,15 @@ $(LIBFT) :
 	@ make -C $(LIBFT_DIR)
 
 $(NAME) : $(LIBFT) $(OBJS)
+	@rm -rf $(BONUS)
 	@$(CC) -o $(NAME) $(OBJS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) $(MLX)
 
 $(BONUS) : $(LIBFT) $(OBJS_BONUS)
-	@$(CC) -o $(BONUS) $(OBJS_BONUS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR)
+	@touch $(BONUS)
+	@$(CC) -o $(NAME) $(OBJS_BONUS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) $(MLX)
 
 %.o : %.c
-	@$(CC) -c $<  -I$(LIBFT_DIR) -Imlx
+	@$(CC) -c $<  -I$(LIBFT_DIR)
 
 clean :
 	@echo "FDF : make clean"
