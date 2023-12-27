@@ -6,7 +6,7 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:39:38 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/26 22:09:23 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:25:53 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	reset_img(t_data *img)
 	}
 }
 
-void	set_ratio(t_info *info)
+int	set_ratio(t_info *info)
 {
 	double	max_diagonal;
 	double	max_height;
@@ -51,6 +51,7 @@ void	set_ratio(t_info *info)
 	info->min_y = 0;
 	info->max_x = MLX_SIZE_X - 1;
 	info->max_y = MLX_SIZE_Y - 1;
+	return (1);
 }
 
 void	set_valid_tran(t_info *info)
@@ -110,6 +111,6 @@ void	mlx_main(t_info *info)
 	put_whole_img_window(&img, info);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_hook(mlx_win, 2, 0, &key, info);
-	mlx_hook(mlx_win, 17, 0, &mouse, NULL);
+	mlx_hook(mlx_win, 17, 0, &mlx_exit, info);
 	mlx_loop(mlx);
 }

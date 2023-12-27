@@ -6,7 +6,7 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 12:33:12 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/26 21:17:24 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:27:23 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,13 @@ void	free_double_ptr(char **lists);
 
 /*fdf_mlx.c*/
 void	reset_img(t_data *img);
-void	set_ratio(t_info *info);
+int		set_ratio(t_info *info);
 void	set_valid_tran(t_info *info);
 void	tran_model(t_info *info);
 void	mlx_main(t_info *info);
 
 /*fdf_bonus.c*/
 int		key(int keycode, t_info *info);
-int		mouse(void);
+int		mlx_exit(t_info *info);
 
 #endif

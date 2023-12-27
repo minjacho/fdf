@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   fdf_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:03:26 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/26 19:28:16 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/27 13:49:51 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	parse_main(t_info *info, int fd)
 	while (tmp)
 	{
 		target = tmp;
-		free(tmp->nums);
-		free(target);
 		tmp = tmp->next;
+		free(target->nums);
+		free(target);
 	}
 }
