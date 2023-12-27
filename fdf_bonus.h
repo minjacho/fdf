@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   fdf_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 12:33:12 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/27 14:31:52 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:32:39 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef FDF_BONUS_H
+# define FDF_BONUS_H
 
 # include <mlx.h>
 # include <math.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <unistd.h>
 # include "libft.h"
 
 # define MLX_SIZE_X 1960
@@ -101,7 +102,7 @@ void	set_valid_tran(t_info *info);
 void	tran_model(t_info *info);
 void	mlx_main(t_info *info);
 
-/*fdf_key_hook.c*/
+/*fdf_bonus.c*/
 int		key(int keycode, t_info *info);
 int		mlx_exit(t_info *info);
 

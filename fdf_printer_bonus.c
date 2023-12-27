@@ -6,11 +6,11 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 17:16:06 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/27 14:26:01 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:33:14 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "fdf_bonus.h"
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {

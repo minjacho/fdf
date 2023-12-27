@@ -6,13 +6,13 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:29:54 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/27 14:25:27 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:43:26 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "fdf_bonus.h"
 
-int	tran_key(t_info *info, int keycode)
+int	tran_rotate_key(t_info *info, int keycode)
 {
 	if (keycode == 123)
 		info->tran_x += 10;
@@ -22,11 +22,6 @@ int	tran_key(t_info *info, int keycode)
 		info->tran_y += 10;
 	if (keycode == 125)
 		info->tran_y -= 10;
-	return (1);
-}
-
-int	rotate_key(t_info *info, int keycode)
-{
 	if (keycode == 7)
 		info->x_theta += M_PI / 18;
 	if (keycode == 16)
@@ -38,9 +33,17 @@ int	rotate_key(t_info *info, int keycode)
 
 int	ratio_key(t_info *info, int keycode)
 {
+	if (keycode == 15)
+	{
+		info->x_theta = 0;
+		info->y_theta = 0;
+		info->z_theta = 0;
+		set_ratio(info);
+		return (1);
+	}
 	if (keycode == 24)
 	{
-		if (info->plat_ratio > 100)
+		if (info->plat_ratio > 70)
 		{
 			ft_printf("Warning : max ratio reached\n");
 			return (0);
@@ -60,19 +63,11 @@ int	key(int keycode, t_info *info)
 {
 	int	has_change;
 
-	if (keycode >= 123 && keycode <= 126)
-		has_change = tran_key(info, keycode);
-	if (keycode == 7 || keycode == 16 || keycode == 6)
-		has_change = rotate_key(info, keycode);
-	if (keycode == 24 || keycode == 27)
+	if ((keycode >= 123 && keycode <= 126) \
+		|| (keycode == 7 || keycode == 16 || keycode == 6))
+		has_change = tran_rotate_key(info, keycode);
+	if (keycode == 24 || keycode == 27 || keycode == 15)
 		has_change = ratio_key(info, keycode);
-	if (keycode == 15)
-	{
-		info->x_theta = 0;
-		info->y_theta = 0;
-		info->z_theta = 0;
-		has_change = set_ratio(info);
-	}
 	if (keycode == 53)
 		mlx_exit(info);
 	if (!has_change)
@@ -82,6 +77,7 @@ int	key(int keycode, t_info *info)
 	tran_model(info);
 	put_whole_img_window(info->img, info);
 	mlx_put_image_to_window(info->mlx, info->mlx_win, info->img->img, 0, 0);
+	usleep(1000);
 	return (1);
 }
 

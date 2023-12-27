@@ -6,11 +6,11 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:39:38 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/27 14:25:53 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:49:00 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "fdf_bonus.h"
 
 void	reset_img(t_data *img)
 {
@@ -81,6 +81,14 @@ void	tran_model(t_info *info)
 				info->tran_x + info->points[i][j].x;
 			info->points[i][j].tran_y = \
 				info->tran_y + info->points[i][j].y;
+			if (info->points[i][j].tran_x < 0)
+				info->points[i][j].tran_x = -1;
+			if (info->points[i][j].tran_x > MLX_SIZE_X)
+				info->points[i][j].tran_x = MLX_SIZE_X;
+			if (info->points[i][j].tran_y < 0)
+				info->points[i][j].tran_y = -1;
+			if (info->points[i][j].tran_y > MLX_SIZE_Y)
+				info->points[i][j].tran_y = MLX_SIZE_Y;
 			j++;
 		}
 		i++;

@@ -6,11 +6,11 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 19:37:57 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/27 14:26:08 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:33:21 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "fdf_bonus.h"
 
 void	rotate_x_axis(t_point *point, double theta)
 {
