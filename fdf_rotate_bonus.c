@@ -6,7 +6,7 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 19:37:57 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/28 12:05:38 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/28 17:17:12 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,22 @@ void	apply_ratio_rotate(t_info *info)
 			rotate_x_axis(&info->points[i][j], info->x_theta);
 			rotate_y_axis(&info->points[i][j], info->y_theta);
 			rotate_z_axis(&info->points[i][j], info->z_theta);
-			project(info, &info->points[i][j], info->project_theta);
+			project(info, &info->points[i][j]);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	project(t_info *info, t_point *point, double theta)
+void	project(t_info *info, t_point *point)
 {
 	double	new_x;
 	double	new_y;
 
-	new_x = point->x * cos(theta) - point->y * cos(theta);
-	new_y = point->x * sin(theta) + point->y * sin(theta) - point->z;
+	new_x = point->x * cos(info->project_x_theta) - \
+				point->y * cos(info->project_y_theta);
+	new_y = point->x * sin(info->project_x_theta) + \
+				point->y * sin(info->project_y_theta) - point->z;
 	point->x = new_x;
 	point->y = new_y;
 	if (new_x < info->min_x)

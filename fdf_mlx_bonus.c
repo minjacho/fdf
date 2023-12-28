@@ -6,7 +6,7 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:39:38 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/28 12:05:19 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/28 17:19:04 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,29 +89,26 @@ void	tran_model(t_info *info)
 
 void	mlx_main(t_info *info)
 {
-	void	*mlx;
-	void	*mlx_win;
 	t_data	img;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, MLX_SIZE_X, MLX_SIZE_Y, "fdf");
-	img.img = mlx_new_image(mlx, MLX_SIZE_X, MLX_SIZE_Y);
+	info->mlx = mlx_init();
+	info->mlx_win = mlx_new_window(info->mlx, MLX_SIZE_X, MLX_SIZE_Y, "fdf");
+	img.img = mlx_new_image(info->mlx, MLX_SIZE_X, MLX_SIZE_Y);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, \
 									&img.line_length, &img.endian);
-	info->mlx = mlx;
-	info->mlx_win = mlx_win;
 	info->img = &img;
 	info->x_theta = 0;
 	info->y_theta = 0;
 	info->z_theta = 0;
-	info->project_theta = M_PI / 6;
+	info->project_x_theta = M_PI / 6;
+	info->project_y_theta = M_PI / 6;
 	set_ratio(info);
 	apply_ratio_rotate(info);
 	set_valid_tran(info);
 	tran_model(info);
 	put_whole_img_window(&img, info);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_hook(mlx_win, 2, 0, &key, info);
-	mlx_hook(mlx_win, 17, 0, &mlx_exit, info);
-	mlx_loop(mlx);
+	mlx_put_image_to_window(info->mlx, info->mlx_win, img.img, 0, 0);
+	mlx_hook(info->mlx_win, 2, 0, &key, info);
+	mlx_hook(info->mlx_win, 17, 0, &mlx_exit, info);
+	mlx_loop(info->mlx);
 }
