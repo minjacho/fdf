@@ -6,7 +6,7 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 19:37:57 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/27 14:33:21 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/28 12:05:38 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	apply_ratio_rotate(t_info *info)
 			rotate_x_axis(&info->points[i][j], info->x_theta);
 			rotate_y_axis(&info->points[i][j], info->y_theta);
 			rotate_z_axis(&info->points[i][j], info->z_theta);
-			project(info, &info->points[i][j], M_PI / 6);
+			project(info, &info->points[i][j], info->project_theta);
 			j++;
 		}
 		i++;

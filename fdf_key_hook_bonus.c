@@ -6,7 +6,7 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:29:54 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/27 14:43:26 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/28 12:10:36 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ int	tran_rotate_key(t_info *info, int keycode)
 		info->y_theta += M_PI / 18;
 	if (keycode == 6)
 		info->z_theta += M_PI / 18;
+	if (keycode == 13)
+		info->project_theta -= M_PI / 18;
+	if (keycode == 1)
+		info->project_theta += M_PI / 18;
 	return (1);
 }
 
@@ -38,16 +42,12 @@ int	ratio_key(t_info *info, int keycode)
 		info->x_theta = 0;
 		info->y_theta = 0;
 		info->z_theta = 0;
+		info->project_theta = M_PI / 6;
 		set_ratio(info);
 		return (1);
 	}
 	if (keycode == 24)
 	{
-		if (info->plat_ratio > 70)
-		{
-			ft_printf("Warning : max ratio reached\n");
-			return (0);
-		}
 		info->height_ratio *= 1.1;
 		info->plat_ratio *= 1.1;
 	}
@@ -64,7 +64,8 @@ int	key(int keycode, t_info *info)
 	int	has_change;
 
 	if ((keycode >= 123 && keycode <= 126) \
-		|| (keycode == 7 || keycode == 16 || keycode == 6))
+		|| (keycode == 7 || keycode == 16 || keycode == 6 || \
+				keycode == 13 || keycode == 1))
 		has_change = tran_rotate_key(info, keycode);
 	if (keycode == 24 || keycode == 27 || keycode == 15)
 		has_change = ratio_key(info, keycode);
@@ -74,6 +75,8 @@ int	key(int keycode, t_info *info)
 		return (0);
 	reset_img(info->img);
 	apply_ratio_rotate(info);
+	if (keycode == 15)
+		set_valid_tran(info);
 	tran_model(info);
 	put_whole_img_window(info->img, info);
 	mlx_put_image_to_window(info->mlx, info->mlx_win, info->img->img, 0, 0);

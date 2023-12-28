@@ -6,7 +6,7 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 12:33:12 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/27 14:32:39 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/28 12:04:31 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_info
 	double	x_theta;
 	double	y_theta;
 	double	z_theta;
+	double	project_theta;
 }	t_info;
 
 /*fdf_printer.c*/

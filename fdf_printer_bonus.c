@@ -6,7 +6,7 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 17:16:06 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/27 14:33:14 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/28 11:50:30 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	get_color(t_info *info, t_point p1, t_point p2, double pct)
 	return (color);
 }
 
-void	put_line_on_window(t_data *img, t_point p1, t_point p2, t_info *info)
+static void	sub_put_line(t_data *img, t_point p1, t_point p2, t_info *info)
 {
 	double	x;
 	double	y;
@@ -65,6 +65,19 @@ void	put_line_on_window(t_data *img, t_point p1, t_point p2, t_info *info)
 			y += (p2.tran_y - p1.tran_y) / (p2.tran_x - p1.tran_x);
 		}
 	}
+}
+
+void	put_line_on_window(t_data *img, t_point p1, t_point p2, t_info *info)
+{
+	if (p1.tran_x < 0 && p2.tran_x < 0)
+		return ;
+	if (p1.tran_x >= MLX_SIZE_X && p2.tran_x >= MLX_SIZE_X)
+		return ;
+	if (p1.tran_y < 0 && p2.tran_y < 0)
+		return ;
+	if (p1.tran_y >= MLX_SIZE_Y && p2.tran_y >= MLX_SIZE_Y)
+		return ;
+	sub_put_line(img, p1, p2, info);
 }
 
 void	put_whole_img_window(t_data *img, t_info *info)
