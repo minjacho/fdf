@@ -6,7 +6,7 @@
 /*   By: minjacho <minjacho@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 13:46:46 by minjacho          #+#    #+#             */
-/*   Updated: 2023/12/27 14:32:56 by minjacho         ###   ########.fr       */
+/*   Updated: 2023/12/28 13:10:05 by minjacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	ft_better_atod(const char *str)
 			sign = -1;
 		i++;
 	}
+	if (!ft_isdigit(str[i]))
+		exit_not_valid_input();
 	while (str[i] && ft_isdigit(str[i]))
 	{
 		num *= 10;
@@ -66,16 +68,15 @@ int	get_one_line_input(int fd, double **nums)
 	str_nums = ft_split(line, ' ');
 	if (!str_nums)
 		exit_malloc_error();
+	if (!str_nums[0])
+		exit_not_valid_input();
 	size = 0;
 	while (str_nums[size])
 		size++;
 	*nums = (double *)malloc(sizeof(double) * size);
-	idx = 0;
-	while (idx < size)
-	{
+	idx = -1;
+	while (++idx < size)
 		(*nums)[idx] = ft_better_atod(str_nums[idx]);
-		idx++;
-	}
 	free(line);
 	free_double_ptr(str_nums);
 	return (size);
@@ -106,6 +107,8 @@ t_input	*read_file(int fd)
 
 	start = make_new_node(fd);
 	tmp = start;
+	if (!tmp)
+		exit_not_valid_input();
 	while (tmp)
 	{
 		tmp->next = make_new_node(fd);
